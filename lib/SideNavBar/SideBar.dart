@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class SideBar extends StatefulWidget {
@@ -10,6 +12,45 @@ class SideBar extends StatefulWidget {
 class _SideBarState extends State<SideBar> {
   @override
   Widget build(BuildContext context) {
-    return Drawer();
+    return Drawer(
+      child: Column(
+        children: [
+          Container(
+              width: double.infinity,
+              height: 300,
+              padding: EdgeInsets.all(20),
+              color: Colors.black,
+              child: Center(
+                  child: Text("Logged In",
+                      style: TextStyle(color: Colors.white, fontSize: 40)))),
+          ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              }),
+          ListTile(
+            leading: Icon(Icons.design_services),
+            title: Text("NGO Portal"),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => FrontScreen()),
+              // );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.arrow_back),
+            title: Text("Log Out"),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => FrontScreen()),
+              // );
+            },
+          )
+        ],
+      ),
+    );
   }
 }
