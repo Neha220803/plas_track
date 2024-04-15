@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:plas_track/NGO/MapPage.dart';
+import 'package:plas_track/NGO/PaymentPage.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
@@ -30,6 +32,16 @@ class _SideBarState extends State<SideBar> {
                 Navigator.pop(context);
               }),
           ListTile(
+            leading: Icon(Icons.map),
+            title: Text("View Maps"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MapPage()),
+              );
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.design_services),
             title: Text("NGO Portal"),
             onTap: () {
@@ -43,10 +55,10 @@ class _SideBarState extends State<SideBar> {
             leading: Icon(Icons.arrow_back),
             title: Text("Log Out"),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => FrontScreen()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Paymentpage()),
+              );
             },
           )
         ],
