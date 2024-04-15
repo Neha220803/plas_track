@@ -43,12 +43,12 @@ class _SideBarState extends State<SideBar> {
           ),
           ListTile(
             leading: Icon(Icons.design_services),
-            title: Text("NGO Portal"),
+            title: Text("Credit Incentive"),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => FrontScreen()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Paymentpage()),
+              );
             },
           ),
           ListTile(

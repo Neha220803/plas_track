@@ -16,10 +16,10 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideBar(),
+      // drawer: SideBar(),
       appBar: AppBar(
         title: Text(
-          "Plastrack",
+          "View Flags in Map",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
