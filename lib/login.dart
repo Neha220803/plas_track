@@ -1,10 +1,21 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:plas_track/HomeNavPage.dart';
 
+// Define the User model
+class Users {
+  final String displayName;
+  final String email;
+
+  Users({
+    required this.displayName,
+    required this.email,
+  });
+}
+
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -131,10 +142,61 @@ class _LoginPageState extends State<LoginPage> {
                 _loginMessage,
                 style: const TextStyle(color: Colors.red),
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  fixedSize: const Size(400, 50),
+                ),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible:
+                        false, // Prevents user from dismissing the dialog
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      );
+                    },
+                  );
+                  await signInWithGoogle();
+                  Navigator.of(context, rootNavigator: true).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeNavPage()),
+                  );
+                },
+                child: const Text("Log in with Google"),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Future<Users> signInWithGoogle() async {
+  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+  UserCredential userCred =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+  print(userCred.user?.displayName);
+  String displayName = userCred.user?.displayName ?? "";
+  String email = userCred.user?.email ?? "";
+
+  // Create a User object
+  Users users = Users(
+    displayName: displayName,
+    email: email,
+  );
+  return users;
 }
