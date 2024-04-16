@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                       return Center(
                         child: CircularProgressIndicator(
                           valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                              AlwaysStoppedAnimation<Color>(Colors.black),
                         ),
                       );
                     },

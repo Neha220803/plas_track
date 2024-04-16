@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -11,6 +12,8 @@ class Paymentpage extends StatefulWidget {
 class _PaymentpageState extends State<Paymentpage> {
   final TextEditingController _amountController =
       TextEditingController(text: '0.00');
+  final CollectionReference _transactions =
+      FirebaseFirestore.instance.collection('transactions');
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +102,8 @@ class _PaymentpageState extends State<Paymentpage> {
                     var options = {
                       'key': 'rzp_test_1DP5mmOlF5G5ag',
                       'amount': amount.toInt(),
-                      'name': 'Ananya Singh',
-                      'description': 'shE-Wallet Monthly Contribution',
+                      'name': 'Neeharika S',
+                      'description': 'Plastrack: Cultivating Change',
                       'retry': {'enabled': true, 'max_count': 1},
                       'send_sms_hash': true,
                       'prefill': {
@@ -160,26 +163,25 @@ class _PaymentpageState extends State<Paymentpage> {
         "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
   }
 
-  Future<void> handlePaymentSuccessResponse(
-      PaymentSuccessResponse response) async {
-    // await _transactions.add({
-    //   'upi_transaction_id': response.paymentId,
-    //   'amount': 100, // You can replace this with the actual amount
-    //   'community_id': "BC101", // Replace with actual community ID
-    //   'time_stamp': FieldValue.serverTimestamp(),
-    //   'from_user': "Ananya Sign",
-    // });
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
+    try {
+      await _transactions.add({
+        'upi_transaction_id': response.paymentId,
+        'amount': 25, // Replace with the actual amount
+        'time_stamp': FieldValue.serverTimestamp(),
+        'to_user': "Ananya Sign",
+        'reason': 'Recycling Bonus'
+      });
 
-    /*
-    * Payment Success Response contains three values:
-    * 1. Order ID
-    * 2. Payment ID
-    * 3. Signature
-    * */
-
-    print(response.data.toString());
-    showAlertDialog(
-        context, "Payment Successful", "Payment ID: ${response.paymentId}");
+      // Show success dialog
+      showAlertDialog(
+          context, "Payment Successful", "Payment ID: ${response.paymentId}");
+    } catch (e) {
+      print('Error adding transaction to Firestore: $e');
+      // Show error dialog
+      showAlertDialog(
+          context, "Error", "Failed to update transaction in database.");
+    }
   }
 
   void handleExternalWalletSelected(ExternalWalletResponse response) {
