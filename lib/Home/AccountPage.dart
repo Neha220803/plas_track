@@ -32,6 +32,7 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final CollectionReference _transactions =
       FirebaseFirestore.instance.collection('transactions');
+      
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,6 @@ class _AccountPageState extends State<AccountPage> {
                 padding: EdgeInsets.all(16.0),
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data?.docs.length ?? 0,
                   itemBuilder: (context, index) {
                     var transactionData = snapshot.data?.docs[index].data()

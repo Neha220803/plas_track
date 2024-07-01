@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:plas_track/NGO/MapPage.dart';
-import 'package:plas_track/NGO/PaymentPage.dart';
 import 'package:plas_track/login.dart';
 
 class SideBar extends StatefulWidget {
@@ -64,17 +63,7 @@ class _SideBarState extends State<SideBar> {
               );
             },
           ),
-          ListTile(
-            leading: Icon(Icons.design_services),
-            title: Text("Credit Incentive"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Paymentpage()),
-              );
-            },
-          ),
-          ListTile(
+            ListTile(
             leading: Icon(Icons.arrow_back),
             title: Text("Log Out"),
             onTap: () async {
